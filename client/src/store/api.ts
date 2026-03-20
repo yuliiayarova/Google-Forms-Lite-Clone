@@ -1,52 +1,20 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { AnswerInput, QuestionInput } from "../types/form";
+import type {
+  CreateFormResponse,
+  GetFormByIdResponse,
+  GetFormsResponse,
+  GetResponsesResponse,
+  SubmitResponseApiResponse,
+} from "../types/api";
 
-interface GetFormsResponse {
-  data: {
-    forms: {
-      id: string;
-      title: string;
-      description?: string;
-    }[];
-  };
-}
-
-interface GetFormByIdResponse {
-  data: {
-    form: {
-      id: string;
-      title: string;
-      description?: string;
-      questions: {
-        id: string;
-        label: string;
-        type: string;
-        options?: string[];
-      }[];
-    };
-  };
-}
-
-interface GetResponsesResponse {
-  data: {
-    responses: {
-      id: string;
-      formId: string;
-      answers: {
-        questionId: string;
-        value: string;
-      }[];
-    }[];
-  };
-}
-
-interface CreateFormArgs {
+export interface CreateFormArgs {
   title: string;
   description?: string;
   questions: QuestionInput[];
 }
 
-interface SubmitResponseArgs {
+export interface SubmitResponseArgs {
   formId: string;
   answers: AnswerInput[];
 }
@@ -56,7 +24,7 @@ export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:4000/",
   }),
-  tagTypes: ["Forms", "Responses", "Form"],
+  tagTypes: ["Forms", "Form", "Responses"],
   endpoints: (builder) => ({
     getForms: builder.query<GetFormsResponse, void>({
       query: () => ({
@@ -64,7 +32,7 @@ export const api = createApi({
         method: "POST",
         body: {
           query: `
-            query {
+            query GetForms {
               forms {
                 id
                 title
@@ -100,7 +68,7 @@ export const api = createApi({
           variables: { id },
         },
       }),
-      providesTags: ["Form"],
+      providesTags: (_result, _error, id) => [{ type: "Form", id }],
     }),
 
     getResponses: builder.query<GetResponsesResponse, string>({
@@ -123,10 +91,12 @@ export const api = createApi({
           variables: { formId },
         },
       }),
-      providesTags: ["Responses"],
+      providesTags: (_result, _error, formId) => [
+        { type: "Responses", id: formId },
+      ],
     }),
 
-    createForm: builder.mutation<any, CreateFormArgs>({
+    createForm: builder.mutation<CreateFormResponse, CreateFormArgs>({
       query: ({ title, description, questions }) => ({
         url: "",
         method: "POST",
@@ -135,7 +105,7 @@ export const api = createApi({
             mutation CreateForm(
               $title: String!
               $description: String
-              $questions: [QuestionInput]
+              $questions: [QuestionInput!]
             ) {
               createForm(
                 title: $title
@@ -157,7 +127,10 @@ export const api = createApi({
       invalidatesTags: ["Forms"],
     }),
 
-    submitResponse: builder.mutation<any, SubmitResponseArgs>({
+    submitResponse: builder.mutation<
+      SubmitResponseApiResponse,
+      SubmitResponseArgs
+    >({
       query: ({ formId, answers }) => ({
         url: "",
         method: "POST",
@@ -165,7 +138,7 @@ export const api = createApi({
           query: `
             mutation SubmitResponse(
               $formId: ID!
-              $answers: [AnswerInput]
+              $answers: [AnswerInput!]
             ) {
               submitResponse(
                 formId: $formId
@@ -182,7 +155,9 @@ export const api = createApi({
           },
         },
       }),
-      invalidatesTags: ["Responses"],
+      invalidatesTags: (_result, _error, { formId }) => [
+        { type: "Responses", id: formId },
+      ],
     }),
   }),
 });
