@@ -1,0 +1,29 @@
+{
+  "name": "google-forms-lite-clone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuliiayarova/Google-Forms-Lite-Clone.git"
+  },
+  "keywords": [],
+  "author": "Yuliia Yarova <yuliiayarova96@gmail.com>",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/yuliiayarova/Google-Forms-Lite-Clone/issues"
+  },
+  "homepage": "https://github.com/yuliiayarova/Google-Forms-Lite-Clone#readme",
+  "dependencies": {
+    "@apollo/server": "^5.4.0",
+    "@reduxjs/toolkit": "^2.11.2",
+    "graphql": "^16.13.1",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.13.1"
+  }
+}
