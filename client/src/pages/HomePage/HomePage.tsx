@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useGetFormsQuery } from "../../store/api";
+import FormCard from "../../components/forms/FormCard/FormCard";
 
 export default function HomePage() {
   const { data, isLoading, error } = useGetFormsQuery();
@@ -19,13 +20,12 @@ export default function HomePage() {
       ) : (
         <ul>
           {forms.map((form) => (
-            <li key={form.id}>
-              <h2>{form.title}</h2>
-              <p>{form.description}</p>
-              <Link to={`/forms/${form.id}/fill`}>View Form</Link>
-              {" | "}
-              <Link to={`/forms/${form.id}/responses`}>View Responses</Link>
-            </li>
+            <FormCard
+              key={form.id}
+              id={form.id}
+              title={form.title}
+              description={form.description}
+            />
           ))}
         </ul>
       )}
