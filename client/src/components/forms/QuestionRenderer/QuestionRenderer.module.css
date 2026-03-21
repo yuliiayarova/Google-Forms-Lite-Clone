@@ -1,0 +1,71 @@
+.wrapper {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow:
+    0 1px 2px rgba(60, 64, 67, 0.16),
+    0 1px 3px rgba(60, 64, 67, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.label {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #202124;
+  line-height: 1.4;
+}
+
+.input,
+.dateInput {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #dadce0;
+  background: transparent;
+  padding: 10px 0;
+  font-size: 1rem;
+  color: #202124;
+  transition: border-color 0.2s ease;
+}
+
+.input:focus,
+.dateInput:focus {
+  outline: none;
+  border-bottom: 2px solid #673ab7;
+}
+
+.optionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.optionLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  color: #202124;
+  cursor: pointer;
+}
+
+.radio,
+.checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: #673ab7;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.optionText {
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .wrapper {
+    padding: 16px;
+  }
+}

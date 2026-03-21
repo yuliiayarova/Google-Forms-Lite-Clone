@@ -1,5 +1,7 @@
 import QuestionRenderer from "../../components/forms/QuestionRenderer/QuestionRenderer";
 import { useFillFormPage } from "./useFillFormPage";
+import css from "./FillFormPage.module.css";
+import Loader from "../../components/Loader/Loader";
 
 export default function FillFormPage() {
   const {
@@ -17,38 +19,56 @@ export default function FillFormPage() {
     handleSubmit,
   } = useFillFormPage();
 
-  if (!id) return <p>Form id is missing.</p>;
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Failed to load form.</p>;
-  if (!form) return <p>Form not found.</p>;
+  if (!id) return <p className={css.stateMessage}>Form id is missing.</p>;
+  if (isLoading) {
+    return (
+      <div className={css.page}>
+        <Loader />
+      </div>
+    );
+  }
+  if (error) return <p className={css.stateMessage}>Failed to load form.</p>;
+  if (!form) return <p className={css.stateMessage}>Form not found.</p>;
 
   return (
-    <div>
-      <h1>{form.title}</h1>
-      <p>{form.description}</p>
+    <div className={css.page}>
+      <div className={css.card}>
+        <div className={css.cardTop} />
 
-      <form onSubmit={handleSubmit}>
-        <ul>
-          {form.questions.map((question) => (
-            <li key={question.id}>
-              <QuestionRenderer
-                question={question}
-                value={answers[question.id]}
-                onTextOrDateChange={handleTextOrDateChange}
-                onRadioChange={handleRadioChange}
-                onCheckboxChange={handleCheckboxChange}
-              />
-            </li>
-          ))}
-        </ul>
+        <div className={css.content}>
+          <h1 className={css.title}>{form.title}</h1>
+          <p className={css.description}>{form.description}</p>
 
-        <button type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Submitting..." : "Submit"}
-        </button>
+          <form onSubmit={handleSubmit} className={css.form}>
+            <ul className={css.questionsList}>
+              {form.questions.map((question) => (
+                <li key={question.id}>
+                  <QuestionRenderer
+                    question={question}
+                    value={answers[question.id]}
+                    onTextOrDateChange={handleTextOrDateChange}
+                    onRadioChange={handleRadioChange}
+                    onCheckboxChange={handleCheckboxChange}
+                  />
+                </li>
+              ))}
+            </ul>
 
-        {successMessage && <p>{successMessage}</p>}
-        {submitError && <p>Failed to submit form.</p>}
-      </form>
+            <div className={css.actions}>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={css.submitButton}
+              >
+                {isSubmitting ? "Submitting..." : "Submit"}
+              </button>
+            </div>
+
+            {successMessage && <p className={css.success}>{successMessage}</p>}
+            {submitError && <p className={css.error}>Failed to submit form.</p>}
+          </form>
+        </div>
+      </div>
     </div>
   );
 }

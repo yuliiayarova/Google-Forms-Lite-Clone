@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import css from "./FormCard.module.css";
 
 interface FormCardProps {
   id: string;
@@ -8,20 +9,28 @@ interface FormCardProps {
 
 export default function FormCard({ id, title, description }: FormCardProps) {
   return (
-    <li
-      style={{
-        border: "1px solid #ccc",
-        padding: "16px",
-        marginBottom: "12px",
-        borderRadius: "8px",
-      }}
-    >
-      <h2>{title}</h2>
-      <p>{description || "No description"}</p>
+    <li className={css.card}>
+      <div className={css.header}>
+        <h2 className={css.title}>{title}</h2>
+        <p
+          className={
+            description
+              ? css.description
+              : `${css.description} ${css.emptyDescription}`
+          }
+        >
+          {description || "No description"}
+        </p>
+      </div>
 
-      <div style={{ display: "flex", gap: "12px" }}>
-        <Link to={`/forms/${id}/fill`}>Open Form</Link>
-        <Link to={`/forms/${id}/responses`}>Responses</Link>
+      <div className={css.actions}>
+        <Link to={`/forms/${id}/fill`} className={css.primaryLink}>
+          Open Form
+        </Link>
+
+        <Link to={`/forms/${id}/responses`} className={css.secondaryLink}>
+          Responses
+        </Link>
       </div>
     </li>
   );

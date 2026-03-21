@@ -1,0 +1,82 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #202124;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.optionItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.input {
+  flex: 1;
+  border: none;
+  border-bottom: 1px solid #dadce0;
+  background: transparent;
+  padding: 8px 0;
+  font-size: 0.95rem;
+  color: #202124;
+  transition: border-color 0.2s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-bottom: 2px solid #673ab7;
+}
+
+.removeButton {
+  border: none;
+  background: transparent;
+  color: #d93025;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 999px;
+  transition: background-color 0.2s ease;
+}
+
+.removeButton:hover {
+  background: rgba(217, 48, 37, 0.08);
+}
+
+.addButton {
+  align-self: flex-start;
+  border: none;
+  background: rgba(103, 58, 183, 0.08);
+  color: #673ab7;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.addButton:hover {
+  background: rgba(103, 58, 183, 0.14);
+}
+
+.empty {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #9aa0a6;
+}

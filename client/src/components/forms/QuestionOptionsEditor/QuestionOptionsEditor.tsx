@@ -1,3 +1,5 @@
+import css from "./QuestionOptionsEditor.module.css";
+
 interface QuestionOptionsEditorProps {
   questionId: string;
   options: string[];
@@ -18,34 +20,41 @@ export default function QuestionOptionsEditor({
   onRemoveOption,
 }: QuestionOptionsEditorProps) {
   return (
-    <div>
-      <h3>Options</h3>
+    <div className={css.wrapper}>
+      <h3 className={css.title}>Options</h3>
 
       {options.length > 0 ? (
-        <ul>
+        <ul className={css.list}>
           {options.map((option, index) => (
-            <li key={`${questionId}-${index}`}>
+            <li key={`${questionId}-${index}`} className={css.optionItem}>
               <input
                 type="text"
                 value={option}
                 onChange={(event) =>
                   onOptionChange(questionId, index, event.target.value)
                 }
+                className={css.input}
               />
+
               <button
                 type="button"
                 onClick={() => onRemoveOption(questionId, index)}
+                className={css.removeButton}
               >
-                Remove Option
+                Remove
               </button>
             </li>
           ))}
         </ul>
       ) : (
-        <p>No options yet.</p>
+        <p className={css.empty}>No options yet.</p>
       )}
 
-      <button type="button" onClick={() => onAddOption(questionId)}>
+      <button
+        type="button"
+        onClick={() => onAddOption(questionId)}
+        className={css.addButton}
+      >
         Add Option
       </button>
     </div>

@@ -1,7 +1,9 @@
+import css from "./Loader.module.css";
+
 export default function Loader() {
   return (
-    <div style={{ padding: "20px", textAlign: "center" }}>
-      <p>Loading...</p>
+    <div className={css.wrapper}>
+      <div className={css.spinner} />
     </div>
   );
 }

@@ -1,75 +1,60 @@
-import { useParams } from "react-router-dom";
-import { useGetFormByIdQuery, useGetResponsesQuery } from "../../store/api";
+import ResponseCard from "../../components/forms/ResponseCard/ResponseCard";
+import { useFormResponsesPage } from "./useFormResponsesPage";
+import css from "./FormResponsesPage.module.css";
+import Loader from "../../components/Loader/Loader";
 
 export default function FormResponsesPage() {
-  const { id } = useParams<{ id: string }>();
-
   const {
-    data: formData,
-    isLoading: isFormLoading,
-    error: formError,
-  } = useGetFormByIdQuery(id ?? "", {
-    skip: !id,
-  });
+    id,
+    form,
+    responses,
+    isFormLoading,
+    isResponsesLoading,
+    formError,
+    responsesError,
+    getQuestionLabel,
+  } = useFormResponsesPage();
 
-  const {
-    data: responsesData,
-    isLoading: isResponsesLoading,
-    error: responsesError,
-  } = useGetResponsesQuery(id ?? "", {
-    skip: !id,
-  });
-
-  if (!id) return <p>Form id is missing.</p>;
-  if (isFormLoading || isResponsesLoading) return <p>Loading...</p>;
-  if (formError) return <p>Failed to load form.</p>;
-  if (responsesError) return <p>Failed to load responses.</p>;
-
-  const form = formData?.data?.form;
-  const responses = responsesData?.data?.responses ?? [];
-
-  if (!form) return <p>Form not found.</p>;
-
-  const getQuestionLabel = (questionId: string) => {
-    const question = form.questions.find((q) => q.id === questionId);
-    return question?.label ?? "Unknown question";
-  };
+  if (!id) return <p className={css.stateMessage}>Form id is missing.</p>;
+  if (isFormLoading || isResponsesLoading) {
+    return (
+      <div className={css.page}>
+        <Loader />
+      </div>
+    );
+  }
+  if (formError)
+    return <p className={css.stateMessage}>Failed to load form.</p>;
+  if (responsesError) {
+    return <p className={css.stateMessage}>Failed to load responses.</p>;
+  }
+  if (!form) return <p className={css.stateMessage}>Form not found.</p>;
 
   return (
-    <div>
-      <h1>Responses for: {form.title}</h1>
-      <p>{form.description}</p>
+    <div className={css.page}>
+      <div className={css.card}>
+        <div className={css.cardTop} />
 
-      {responses.length === 0 ? (
-        <p>No responses yet.</p>
-      ) : (
-        <div>
-          {responses.map((response, index) => (
-            <div
-              key={response.id}
-              style={{
-                border: "1px solid #ccc",
-                padding: "16px",
-                marginBottom: "16px",
-                borderRadius: "8px",
-              }}
-            >
-              <h2>Response {index + 1}</h2>
+        <div className={css.content}>
+          <h1 className={css.title}>Responses for: {form.title}</h1>
+          <p className={css.description}>{form.description}</p>
 
-              <ul>
-                {response.answers.map((answer) => (
-                  <li key={`${response.id}-${answer.questionId}`}>
-                    <p>
-                      <strong>{getQuestionLabel(answer.questionId)}</strong>
-                    </p>
-                    <p>{answer.value || "No answer"}</p>
-                  </li>
-                ))}
-              </ul>
+          {responses.length === 0 ? (
+            <p className={css.emptyState}>No responses yet.</p>
+          ) : (
+            <div className={css.responsesList}>
+              {responses.map((response, index) => (
+                <ResponseCard
+                  key={response.id}
+                  response={response}
+                  index={index}
+                  getQuestionLabel={getQuestionLabel}
+                />
+              ))}
             </div>
-          ))}
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 }

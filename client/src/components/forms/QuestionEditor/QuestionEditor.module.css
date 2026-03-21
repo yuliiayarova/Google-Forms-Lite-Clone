@@ -1,0 +1,80 @@
+.item {
+  list-style: none;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow:
+    0 1px 2px rgba(60, 64, 67, 0.16),
+    0 1px 3px rgba(60, 64, 67, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #5f6368;
+}
+
+.input,
+.select {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid #dadce0;
+  background: transparent;
+  padding: 10px 0;
+  font-size: 1rem;
+  color: #202124;
+  transition: border-color 0.2s ease;
+}
+
+.input:focus,
+.select:focus {
+  outline: none;
+  border-bottom: 2px solid #673ab7;
+}
+
+.select {
+  cursor: pointer;
+}
+
+.optionsWrapper {
+  margin-top: 4px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.removeButton {
+  border: none;
+  background: transparent;
+  color: #d93025;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 999px;
+  transition: background-color 0.2s ease;
+}
+
+.removeButton:hover {
+  background: rgba(217, 48, 37, 0.08);
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding: 16px;
+  }
+}

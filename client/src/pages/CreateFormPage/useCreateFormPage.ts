@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { SyntheticEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { ValidationError } from "yup";
 import { useCreateFormMutation } from "../../store/api";
 import type { QuestionType } from "../../types/form";
 import {
@@ -9,11 +10,13 @@ import {
   normalizeQuestions,
   type QuestionInputWithId,
 } from "../../utils/questionHelpers";
+import { createFormSchema } from "../../utils/formValidation";
 
 export function useCreateFormPage() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [questions, setQuestions] = useState<QuestionInputWithId[]>([]);
+  const [validationError, setValidationError] = useState("");
 
   const [createForm, { isLoading, error }] = useCreateFormMutation();
   const navigate = useNavigate();
@@ -104,14 +107,25 @@ export function useCreateFormPage() {
 
   const handleSubmit = async (event: SyntheticEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setValidationError("");
 
     if (!title.trim()) {
+      setValidationError("Form title is required");
       return;
     }
 
-    const normalizedQuestions = normalizeQuestions(questions);
-
     try {
+      await createFormSchema.validate(
+        {
+          title,
+          description,
+          questions,
+        },
+        { abortEarly: true },
+      );
+
+      const normalizedQuestions = normalizeQuestions(questions);
+
       await createForm({
         title: title.trim(),
         description: description.trim(),
@@ -120,6 +134,11 @@ export function useCreateFormPage() {
 
       navigate("/");
     } catch (err) {
+      if (err instanceof ValidationError) {
+        setValidationError(err.message);
+        return;
+      }
+
       console.error("Failed to create form:", err);
     }
   };
@@ -130,6 +149,7 @@ export function useCreateFormPage() {
     questions,
     isLoading,
     error,
+    validationError,
     setTitle,
     setDescription,
     handleAddQuestion,
