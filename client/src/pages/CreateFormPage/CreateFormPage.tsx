@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { SyntheticEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useCreateFormMutation } from "../../store/api";
 import QuestionEditor from "../../components/forms/QuestionEditor/QuestionEditor";
 import type { QuestionInput, QuestionType } from "../../types/form";
@@ -140,10 +140,6 @@ export default function CreateFormPage() {
 
   return (
     <div>
-      <div style={{ marginBottom: "20px" }}>
-        <Link to="/">Home</Link>
-      </div>
-
       <h1>Create New Form</h1>
 
       <form onSubmit={handleSubmit}>

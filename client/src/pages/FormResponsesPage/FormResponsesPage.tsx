@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useGetFormByIdQuery, useGetResponsesQuery } from "../../store/api";
 
 export default function FormResponsesPage() {
@@ -37,10 +37,6 @@ export default function FormResponsesPage() {
 
   return (
     <div>
-      <div style={{ marginBottom: "20px" }}>
-        <Link to="/">Home</Link>
-      </div>
-
       <h1>Responses for: {form.title}</h1>
       <p>{form.description}</p>
 

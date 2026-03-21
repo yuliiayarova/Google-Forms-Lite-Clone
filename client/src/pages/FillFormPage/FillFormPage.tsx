@@ -1,5 +1,5 @@
 import { useState, type SyntheticEvent } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   useGetFormByIdQuery,
   useSubmitResponseMutation,
@@ -93,10 +93,6 @@ export default function FillFormPage() {
 
   return (
     <div>
-      <div style={{ marginBottom: "20px" }}>
-        <Link to="/">Home</Link>
-      </div>
-
       <h1>{form.title}</h1>
       <p>{form.description}</p>
 
