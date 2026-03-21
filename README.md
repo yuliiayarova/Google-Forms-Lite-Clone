@@ -20,6 +20,8 @@ A simplified clone of Google Forms built as a monorepo with a React + TypeScript
 - GraphQL API with in-memory storage
 - RTK Query for data fetching and mutations
 - React Router for page navigation
+- Client-side validation using Yup
+- Clean UI styled with CSS Modules
 
 ---
 
@@ -108,12 +110,6 @@ Starts the GraphQL server.
 
 ### Queries
 
-- `forms`
-- `form(id: ID!)`
-- `responses(formId: ID!)`
-
-### Queries (Detailed)
-
 - `forms` — returns a list of all created forms
 - `form(id: ID!)` — returns a single form by its ID
 - `responses(formId: ID!)` — returns all responses for a specific form
@@ -125,8 +121,9 @@ Starts the GraphQL server.
 
 ## Implementation Notes
 
-- The client uses RTK Query to communicate with the GraphQL API.
-- Form creation and form filling use local component state for handling dynamic form structures.
+- RTK Query is used for all API communication and caching.
+- Business logic is separated into custom hooks and utility functions.
+- Dynamic form state (builder & fill) is handled locally with React state.
 - Reusable UI components:
   - `FormCard`
   - `QuestionRenderer`
