@@ -140,3 +140,4 @@ Starts the GraphQL server.
 - The server uses in-memory storage.
 - Data does not persist after restarting the server.
 - No authentication is implemented, as it is not required for this test task.
+- GraphQL types are currently maintained manually. Code generation was considered as a possible future improvement.
