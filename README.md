@@ -130,6 +130,15 @@ Starts the GraphQL server.
   - `QuestionEditor`
   - `QuestionOptionsEditor`
 
+## Testing
+
+Run tests in the client:
+
+```bash
+cd client
+npm run test
+```
+
 ---
 
 ## Notes
